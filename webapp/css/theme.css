@@ -1,0 +1,19 @@
+/* COLOR-PALLETE */
+
+:root{
+    --white:#D9D9D9;
+
+    --black:#1d1d1d;
+
+    --obscure:#2C3639;
+
+    --dark:#3F4E4F;
+
+    --main:#A27B5C;
+
+    --light:#DCD7C9;
+}
+
+/* TYPOGRAPHY */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;700&display=swap');

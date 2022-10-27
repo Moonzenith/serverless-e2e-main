@@ -8,13 +8,12 @@ import {
     aws_timestream as TimeStream,
     aws_sqs as SQS,
     aws_sns as SNS,
+    aws_quicksight as Quicksight,
     CfnOutput,
     Duration,
     RemovalPolicy,
 } from 'aws-cdk-lib'
 import { Construct } from 'constructs'
-
-import * as apiConfig from '../../api/claudia.json'
 
 export class BackendStack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
@@ -43,7 +42,7 @@ export class BackendStack extends Stack {
         })
 
 
-        // [ ] 4.1.1: create processing orders queue [docs](https://docs.aws.amazon.com/cdk/api/v1/docs/@aws-cdk_aws-sqs.Queue.html)
+        // [ ] 4.1.1: create processing orders queue
         const ordersQueue = new SQS.Queue(this, 'ordersQueue', {
             visibilityTimeout: Duration.seconds(60)
         })
@@ -51,7 +50,7 @@ export class BackendStack extends Stack {
         // [ ] 4.1.2: create user notification topic (sns) [docs](https://docs.aws.amazon.com/cdk/api/v1/docs/@aws-cdk_aws-sns.Topic.html)
         const userNotificationTopic = new SNS.Topic(this, 'userNotification')
 
-        // [ ] 4.2.1: create a lambda to handle dynamodb stream [docs](https://docs.aws.amazon.com/cdk/api/v1/docs/@aws-cdk_aws-lambda.Function.html)
+        // [ ] 4.2.1: create a lambda to handle dynamodb stream
         const dynamoLambda = new Lambda.Function(this, 'dynamoHandler', {
             runtime: Lambda.Runtime.NODEJS_14_X,
             code: Lambda.Code.fromAsset('../functions/dynamo-handler'),
@@ -62,34 +61,33 @@ export class BackendStack extends Stack {
                 TS_TABLE: '',
             },
         })
+        new CfnOutput(this, 'dynamoLambda', {
+            value: dynamoLambda.functionName,
+        })
 
-        // [ ] 4.2.2: create a lambda to handle sqs messages [docs](https://docs.aws.amazon.com/cdk/api/v1/docs/@aws-cdk_aws-lambda.Function.html)
+        // [ ] 4.2.2: create a lambda to handle sqs messages
         const sqsLambda = new Lambda.Function(this, 'sqsHandler', {
             runtime: Lambda.Runtime.NODEJS_14_X,
             code: Lambda.Code.fromAsset('../functions/sqs-handler'),
             handler: 'index.handler',
             environment: { QUEUE: ordersQueue.queueUrl },
         })
+        new CfnOutput(this, 'sqsLambda', {
+            value: sqsLambda.functionName,
+        })
 
 
 
-
-        // [ ] 4.3.1: set lambda 4.2.1 as handler for dynamodb table updates [docs](https://docs.aws.amazon.com/cdk/api/v1/docs/@aws-cdk_aws-lambda.Function.html#addwbreventwbrsourcesource)
-
-        // allow lambda to read dynamo stream 
+        // [ ] 4.3.1: set lambda 4.2.1 as handler for dynamodb table updates
         ordersTable.grantStreamRead(dynamoLambda)
-
-        // add ordersTable as source for lambda
         dynamoLambda.addEventSource(new LambdaEventSources.DynamoEventSource(ordersTable, {
             startingPosition: Lambda.StartingPosition.TRIM_HORIZON,
             batchSize: 10,
+            
         }))
 
-        // [ ] 4.3.2: set lambda 4.2.2 as handler for sqs queue messages [docs](https://docs.aws.amazon.com/cdk/api/v1/docs/aws-lambda-event-sources-readme.html)
-        // allow lambda to publish messages on queue
-        ordersQueue.grantSendMessages(dynamoLambda)
-
-        // add ordersQueue as source for lambda
+        // [ ] 4.3.2: set lambda 4.2.2 as handler for sqs queue messages
+        ordersQueue.grantSendMessages(sqsLambda)
         sqsLambda.addEventSource(new LambdaEventSources.SqsEventSource(ordersQueue, {
             batchSize: 2,
         }))
@@ -98,16 +96,18 @@ export class BackendStack extends Stack {
 
         /////////////////
 
+
         const TimeStreamDBName = 'serverless-e2e-db'
         const usersLogsTableName = 'ordersts'
 
-        const TimestreamDB = new TimeStream.CfnDatabase(this, TimeStreamDBName, {
+
+        const TimestreamDB = new TimeStream.CfnDatabase(this, 'serverless-e2e-db', {
             databaseName: TimeStreamDBName,
         })
 
-        const ordersTSTable = new TimeStream.CfnTable(this, usersLogsTableName, {
+        const ordersTSTable = new TimeStream.CfnTable(this, 'ordersts', {
             tableName: usersLogsTableName,
-            databaseName: TimeStreamDBName || TimestreamDB.databaseName || '',
+            databaseName: TimestreamDB.databaseName || '',
 
             retentionProperties: {
                 MemoryStoreRetentionPeriodInHours: '36',
@@ -115,6 +115,18 @@ export class BackendStack extends Stack {
             },
             tags: [{ key: 'project', value: 'hackaton-score-app' }],
         })
+
+        dynamoLambda.addEnvironment('TS_DB', TimeStreamDBName)
+        dynamoLambda.addEnvironment('TS_TABLE', usersLogsTableName)
+
+        new CfnOutput(this, 'timestreamDB', {
+            value: TimestreamDB.databaseName?.toString() || '',
+        })
+
+        new CfnOutput(this, 'timestreamTable', {
+            value: ordersTSTable.tableName?.toString() || '',
+        })
+
 
         ordersTSTable.addDependsOn(TimestreamDB)
 

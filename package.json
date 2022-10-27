@@ -1,17 +1,21 @@
 {
   "name": "git-tag-test",
-  "version": "1.0.0",
+  "version": "1.2.2",
   "description": "**Index:**\r 1. **Webapp:**\r     1. **Hosting (S3):** where to store app assets?\r        1. [x] create CDK code for bucket\r        2. [x] add re upload assets to bucket on pipeline\r     2. **CDN (CloudFront):** How to distribute assets across the globe?\r        1. [x] create CDK distribution\r        2. [x] add invalidate cache on pipeline\r     3. **DNS (Route53):** how to set up DNS? -- optional\r        1. [ ] create CDK record set (optional, we may not have access to a domain)\r 2. **REST API:**\r     1. **handlers**\r        1. [x] create lambda: getOrders\r        2. [x] create lambda: createOrder \r        3. [x] create lambda: updateOrder\r     2. **API (CDK/ClaudiaJS):**\r        1. [x] create api\r        2. [x] create /orders [GET, POST]\r        3. [x] create /orders/{customer}/{id} with [PATCH]\r     3. **webapp**\r        1. [x] get orders from api\r        2. [x] create new orders using api\r 3. **Database:**\r     1. **DynamoDB:**\r        1. [x] create CDK code for dynamodb table and grant access to lambda\r        2. [x] connect api to dynamodb\r     2. **handlers:**\r        1. [x] use table on getOrders\r        2. [x] use table on createOrder\r        3. [x] use table on updateOrder\r 4. **Backend processes:**\r     1. **app integration:**\r        1. [x] processing orders queue (sqs)\r        2. [x] user notification (sns)\r     2. **Handlers** \r        1. [x] dynamo stream (lambda)\r        2. [x] SQS handler (lambda)\r     3. **assign handlers:** \r        1. [x] connect a lambda triggered by dynamo that nofify users using sns\r        2. [x] connect a lambda triggered by sqs\r 5.  **Security:**\r     1. **Web App Access Control (Cognito):** How to secure app?\r        1. [ ] create CDK user pool and hosted UI\r        2. [ ] create a Cognito hosted UI for this application\r     2. **API Access Control (Cognito authorizer):**\r        1. [ ] create the cognito authorizer\r        2. [ ] add authorizer to private endpoints",
   "main": "index.js",
   "dependencies": {
-    "apidoc": "^0.51.1"
+    "apidoc": "^0.52.0",
+    "axios": "^0.27.2"
   },
   "devDependencies": {
-    "cypress": "^10.3.0"
+    "@types/aws-sdk": "^2.7.0",
+    "@types/node": "^18.6.1",
+    "cypress": "^10.3.0",
+    "http-server": "^14.1.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "apidoc": "apidoc -i functions/ -o apidoc/",
+    "apidoc": "apidoc -i functions/ -o apidoc/ --verbose -d",
     "next": "git",
     "prev": ""
   },

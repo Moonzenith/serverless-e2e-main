@@ -1,0 +1,7 @@
+{
+  "name": "serverless-e2e app",
+  "version": "0.1.0",
+  "description": "apiDoc basic example",
+  "title": "REST API Docmentation",
+  "url": "{{replace:apiUrl}}"
+}

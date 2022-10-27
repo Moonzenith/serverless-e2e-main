@@ -3,5 +3,5 @@ rule private_bucket when %buckets !empty {
     %buckets.Properties {
         AccessControl == 'Private'
     }
-    %buckets.DeletionPolicy == 'Retain'
+    %buckets.DeletionPolicy == 'Delete'
 }

@@ -1,0 +1,10 @@
+{
+  "backend": {
+    "timestreamTable": "ordersts",
+    "sqsLambda": "backend-sqsHandler9E1A7184-94L5Wl6MXd6Z",
+    "dynamoLambda": "backend-dynamoHandler15FDB600-pBtCP7wwUTTZ",
+    "ordersTableArn": "arn:aws:dynamodb:us-east-2:525462356282:table/backend-orders46FA7C19-J0NPZQ1LVYDU",
+    "timestreamDB": "serverless-e2e-db",
+    "ordersTableName": "backend-orders46FA7C19-J0NPZQ1LVYDU"
+  }
+}

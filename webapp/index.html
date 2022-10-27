@@ -6,161 +6,95 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>some app</title>
+
+    <link rel="stylesheet" href="./css/main.css">
+   
+    <!-- <script src="./src/tools.js" defer></script>
+    <script src="./src/caffe-menu.component.js" defer></script>
+    <script src="./src/caffe-menu-item.component.js" defer></script>
+    <script src="./src/caffe-cart.component.js" defer></script>
+    <script src="./src/caffe-cart-item.component.js" defer></script>
+    <script src="./src/caffe-order-history.component.js" defer></script>
+    <script src="./src/caffe-order-history-item.component.js" defer></script>
+    -->
 </head>
 
 <body>
 
-    <section>
-        <ol class="shopping-cart">
-        </ol>
-    </section>
+    <header>
+        <nav class="nav-menu">
+            <div class="link-container">
+                <button class="test-hint-btn"><a href="#">HINT</a></button>
+                <button class="test-help-btn"><a href="#">HELP</a></button>
+            </div>
+
+            <img src="./assets/SVG/AWSOME.svg" alt="">
+
+            <div class="link-container">
+                <button class="test-cart-btn"><a href="#">CART</a></button>
+                <button id="login-btn" class="test-user-btn"><a href="#">LOGIN</a></button>
+            </div>
+
+        </nav>
+    </header>
 
     <hr>
 
-    <section>
-        <h1>Products</h1>
-        <ul>
-            <li><button id="add-coffe-btn" class="add-product-btn" data-name="coffe" data-type="beberage">coffe</button>
-            </li>
-            <li><button id="add-capuccino-btn" class="add-product-btn" data-name="capuccino"
-                    data-type="beberage">capuccino</button></li>
-            <li><button id="add-chocolate-btn" class="add-product-btn" data-name="hot chocolate"
-                    data-type="beberage">hot chocolate</button></li>
-            <li><button id="add-xxx-btn" class="add-product-btn" data-name="croisant" data-type="meal">croisant</button>
-            </li>
-            <li><button id="add-avocado-btn" class="add-product-btn" data-name="avocado toast" data-type="meal">avocado
-                    toast</button></li>
-        </ul>
-        <button id="place-order-btn">Place order</button>
-    </section>
+    <article class="product-section">
+
+        <caffe-menu store-id="elgin">
+            <caffe-menu-item name="Coffee" type="beberage" img="./assets/cup-coffee.png"></caffe-menu-item>
+            <caffe-menu-item name="Capuccino" type="beberage" img="./assets/capuccino.png"></caffe-menu-item>
+            <caffe-menu-item name="Hot chocolate" type="beberage" img="./assets/hot-chocolate.png"></caffe-menu-item>
+            <caffe-menu-item name="Croissant" type="meal" img="./assets/croissant.png"></caffe-menu-item>
+            <caffe-menu-item name="Avocado toast" type="meal" img="./assets/avocado-toast.png"></caffe-menu-item>
+        </caffe-menu>
+
+        <caffe-cart id="shopping-cart">
+            <caffe-cart-item name="Coffee" type="beberage" qty="1"></caffe-cart-item>
+        </caffe-cart>
+
+    </article>
+
     <hr>
 
+    <caffe-order-history>
 
-    <section id="order-list">
-        <ol class="order-history">
-        </ol>
-    </section>
+        <!-- <caffe-order-history-item customer="asd" id="989898">
+            <caffe-cart-item name="Coffee" type="beberage" qty="3" editable="false"></caffe-cart-item>
+            <caffe-cart-item name="Coffee" type="beberage" qty="3" editable="false"></caffe-cart-item>
+        </caffe-order-history-item> -->
 
-
-
-    <script>
-
-        const baseUrl = 'https://y36j1ckw6e.execute-api.us-east-2.amazonaws.com/dev/' // get from CDK output for api stack
-        const items = []
-        let editable = true
-
-        const renderItems = items => {
-            const list = document.querySelector('.shopping-cart')
-            const listItems = items.map(item =>
-                `<li data-type="${item.type}"  >${item.name} ${editable ? `<button>X</button>` : ''} </li>`)
-            list.innerHTML = listItems.join('\n')
-        }
-
-        const renderOrders = orders => {
-            const list = document.querySelector('.order-history')
-            const listItems = orders.map(order =>
-                `<li data-id="${order.id}" data-customer="${order.customer}" >
-                    <b>Customer:</b> <span>${order.customer}</span>
-                    <br>
-                    <b>Items:</b>
-                    
-                    <ol>
-                        ${order.items.map(item => `<li 
-                            data-name="${item.name}"
-                            data-type="${item.type}"
-                            data-qty="${item.qty}"
-                            >${item.name} x ${item.qty}</li>`).join('\n')}
-                    </ol>
-                </li>`)
-            list.innerHTML = listItems.join('\n')
-        }
-
-        // handle click on each product button
-        const handleAddProduct = event => {
-            console.log(event)
-            console.log(event.target)
-            console.log(event.target.dataset)
-            const data = event.target.dataset
-            items.push({ name: data.name, type: data.type, qty: 1 })
-            renderItems(items)
-        }
-
-        // select all product buttons
-        const productBtns = [...document.querySelectorAll('.add-product-btn')]
-
-        // attach the handler to each product button
-        productBtns.forEach(btn => btn.addEventListener('click', handleAddProduct))
-
-        // select the place order button
-        const placeOrderBtn = document.querySelector('#place-order-btn')
-
-        // add handler to place order button
-        placeOrderBtn.addEventListener('click', async event => {
-            editable = false
-            renderItems(items)
-            // alert('TODO: send the order to api gateway as a POST message')
-            // [x] 2.3.2: send the order to the api [docs](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#supplying_request_options)
-            const url = baseUrl + 'orders'
-            const options = {
-                method: 'POST',
-                body: JSON.stringify({
-                    id: Date.now().toString(),
-                    customer: 'diegotrs',
-                    items: items,
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-
-            try {
-                const res = await fetch(url, options)
-                const responseData = await res.json()
-                renderItems([])
-                await getOrders()
-            } catch (err) {
-                console.error(err)
-            }
-        })
-
-        async function getOrders() {
-            // [ ] 2.3.1: get orders from api [docs](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
-            const url = baseUrl + 'orders'
-            const orders = await fetch(url).then(res => res.json())
-            renderOrders(orders)
-            return orders
-        }
-
-        getOrders()
-            .then(orders => {
-                console.log('orders', orders)
-            })
-            .catch(err => console.error(err))
+    </caffe-order-history>
 
 
-        // [aws-sdk docs](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/top-level-namespace.html)
 
-        /* example request using fetch api
+    <drag-zone>
+        <!-- <b>item 1</b>
+        <b>item 2</b>
+        <b>item 3</b> -->
+    </drag-zone>
 
-        const url = 'https://path.to.api.com/resource'
+    <drop-zone></drop-zone>
 
-        const options = {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
-
-        // send POST request
-        fetch(url, options)
-            .then(res => res.json())
-            .then(res => console.log(res))
-            .catch(error => console.error(error))
-        */
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 
 
-    </script>
+    <!-- <script src="./src/indexed-db.js"></script> -->
+    <script src="./src/order.class.js"></script>
+    <script src="./src/main.js"></script>
+    <script src="./src/tools.js"></script>
+    <script src="./src/caffe-menu.component.js"></script>
+    <script src="./src/caffe-menu-item.component.js"></script>
+    <script src="./src/caffe-cart.component.js"></script>
+    <script src="./src/caffe-cart-item.component.js"></script>
+    <script src="./src/caffe-order-history.component.js"></script>
+    <script src="./src/caffe-order-history-item.component.js"></script>
+   
 
 </body>
 

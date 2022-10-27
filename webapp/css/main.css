@@ -1,0 +1,362 @@
+@import url(./theme.css);
+@import url(./normalize.css);
+
+html{
+    font-family: 'Montserrat', sans-serif;
+}
+
+body{
+    background-color: var(--light);
+}
+
+header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 120px;
+
+    background-color: var(--obscure);
+}
+
+.nav-menu{
+    display: grid;
+    grid-template-columns: auto auto auto;
+
+    align-items: center;
+    justify-content: space-around;
+    
+    width: 100%;
+    height: 100%;
+}
+    .link-container{
+        display: grid;
+        grid-template-columns: repeat(2,45%);
+
+        justify-content: center;
+        align-items: center;
+
+        width: 400px;
+        height: 100%;
+    }
+        .link-container button{
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            height: 100%;
+            background-color: transparent;
+            border: none;
+
+            transition: all 0.2s ease;
+        }
+            .link-container button:hover a{
+                filter: brightness(1.1);
+            }
+            .link-container button:hover{
+                background-color: var(--main);
+                cursor: pointer;
+            }
+            
+
+        .link-container button a{
+            text-decoration: none;
+            font-size: 1.50rem;
+            font-weight: 400;
+            letter-spacing: 4px;
+            color: var(--white);
+            margin: 24px;
+        }
+
+/* PRODUCT-CARDS */
+
+
+.product-section{
+    display: grid;
+    grid-template-columns: 65% 30%;
+    justify-content: space-between; 
+}
+    .product-section h1 {
+        margin: 14px 0;
+        font-weight: 400;
+        transition:all 0.4s ease;
+        letter-spacing: 4px;
+    }
+      
+
+    .catalog-product{
+        background-color: var(--main);
+        color: var(--white);
+        padding: 0px 18px ;
+        margin: 14px 0 14px 14px;
+        border-radius: 16px;
+    }
+        .catalog-product:hover h1{
+        letter-spacing: 12px;
+        }
+        .catalog-product ul{
+            display: grid;
+            grid-template-columns: repeat(5,auto);
+            width: 100%;
+
+            padding: 0;
+            margin: 14px 0;
+            
+            list-style: none;
+
+            overflow-y: hidden;
+            overflow-x: scroll;
+        }
+
+            .card-product { 
+                display: grid;
+                grid-template-columns: repeat(4,auto);
+                grid-template-rows: 80% 20% ;
+
+                width: 260px;
+                height: 180px;
+                padding: 18px;
+                margin: 0 18px 10px 0;
+                border-radius: 10px;
+                border: none;
+
+                background-color: var(--white);
+                color: var(--black);
+            }
+            
+            .card-product img{
+                width: 120px;
+                filter: drop-shadow(0 16px 12px rgba(70, 70, 70, 0.726));
+                transition:all 0.2s ease;
+
+                grid-area: 1/1/2/3;
+            }
+                .card-product:hover img{
+                    transform:translateY(-6px);
+                }
+            .card-product .title{
+                grid-area: 1/3/2/5;
+            }
+                .title h4{
+                    font-size: 1.10rem;
+                    margin: 0;
+                }
+               
+            .card-product .add-more-btn-container{
+                display: flex;
+                justify-content: left;
+                align-items: center;
+                
+                width: 100%;
+                height: 100%;
+                
+                grid-area: 2/1/3/3 ;
+
+                
+            }
+                .add-more-btn{
+                    display: grid;
+                    grid-template-columns: auto auto auto;
+                    grid-template-rows: 100%;
+
+                    justify-content: space-between;
+                    align-items: center;
+
+                    width: 110px;
+                    height: 30px;
+                    padding: 2px 8px;
+                    border-radius: 4px;
+
+                    background-color: var(--obscure);
+                    color: var(--light);
+                }
+                .plus-btn, .minus-btn{
+                    background-color: var(--light);
+                    border: none;
+                    border-radius: 4px;
+                    width: 40px;
+                    height: 20px;
+                }
+
+            .card-product .add-product-btn-container{
+                display: flex;
+                justify-content: right;
+                align-items: center;
+                
+                width: 100%;
+                height: 100%;
+                grid-area: 2/3/3/5;
+
+
+            }
+                .add-product-btn{
+                    width: 80%;
+                    height: 34px;
+                    padding: 2px 8px;
+                    border-radius: 4px;
+                    background-color: var(--obscure);
+                    color: var(--light);
+                    border: none;
+                }
+
+    .place-order-btn {
+        height: 34px;
+        padding: 4px 16px;
+        margin:0 0 14px ;
+        border-radius: 4px;
+        background-color: var(--obscure);
+        color: var(--light);
+        border: none;
+    }
+
+/* SCROLLBAR-STYLE */
+
+/* Estilos para motores Webkit y blink (Chrome, Safari, Opera... )*/
+
+.catalog-product ul::-webkit-scrollbar,.order-history::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.catalog-product ul::-webkit-scrollbar:vertical,.order-history::-webkit-scrollbar:vertical {
+    width:10px;
+}
+
+.catalog-product ul::-webkit-scrollbar-button:increment,.order-history::-webkit-scrollbar-button:increment,.catalog-product ul::-webkit-scrollbar-button,.order-history::-webkit-scrollbar-button {
+    display: none;
+} 
+
+.catalog-product ul::-webkit-scrollbar:horizontal,.order-history::-webkit-scrollbar:horizontal {
+    height: 10px;
+}
+
+.catalog-product ul::-webkit-scrollbar-thumb,.order-history::-webkit-scrollbar-thumb {
+    background-color: var(--obscure);
+    border-radius: 20px;
+    border: 2px solid var(--dark);
+}
+
+.catalog-product ul::-webkit-scrollbar-track, .order-history::-webkit-scrollbar-track {
+    border-radius: 10px;  
+}
+
+/* SHOPPING-CART-CONTAINER */
+
+.shopping-cart-container{
+    padding: 0px 18px ;
+    margin: 14px 14px 14px 0;
+    border-radius: 16px;
+
+    background-color: var(--main);
+
+    color: var(--white);
+}
+    .shopping-cart-container h1{
+        margin: 14px 0;
+        font-weight: 400;
+        transition:all 0.4s ease;
+        letter-spacing: 4px;
+    }
+        .shopping-cart-container:hover h1{
+        letter-spacing: 12px;
+        }
+  
+    .shopping-cart{
+        color: var(--black);
+        background-color: var(--white);
+        border-radius: 8px;
+        padding: 12px;
+    }
+        .shopping-cart li{
+            margin:8px 16px;
+        }
+        .shopping-cart li button{
+            font-size: 0.75rem;
+            font-weight: 700;
+            background-color: var(--obscure);
+            color: var(--white);
+            border-radius: 2px;
+            border: none;
+            padding: 2px 6px;
+        }
+
+/* HISTORIAL-LIST */
+
+.order-list-container{
+    background-color: var(--main);
+    color: var(--white);
+    padding: 0 18px 18px 18px ;
+    margin: 14px 0 14px 14px;
+    border-radius: 16px;
+}
+
+.order-list-container h1{
+    padding: 14px 0 0 0;
+    margin: 0;
+    font-weight: 400;
+    transition:all 0.4s ease;
+    letter-spacing: 4px;
+    
+}
+
+    .order-history{
+        padding: 14px;
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        color: var(--black);
+
+        overflow-x: auto;
+        overflow-y: hidden;
+
+    }
+   
+    .order-list-container:hover h1{
+        letter-spacing: 12px;
+        }
+
+        .order-history li{
+            padding: 14px ;
+            margin: 14px;
+            
+            width: 300px;
+            height: auto;
+
+            border-radius: 8px;
+
+
+            background-color: var(--white);
+        }
+            .order-history li li{
+                background-color: var(--obscure);
+                color: var(--white);
+
+                width: 140px;
+                height: 20px;
+
+                border-radius: 8px;
+            }
+
+            
+
+
+
+
+
+/* BUTTON-HOVER */
+button{
+    transition: all 0.2s ease;
+}
+button:hover{
+
+    filter: brightness(1.2) contrast(0.8);
+    cursor: pointer;
+
+}
+button:active{
+
+    transform: scale(0.9);
+
+}
+.link-container button:active {
+    transform: scale(1);
+
+}

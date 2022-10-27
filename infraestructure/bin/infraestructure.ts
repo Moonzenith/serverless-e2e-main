@@ -9,6 +9,20 @@ const app = new cdk.App()
 
 
 // creating WebAppStack
+// const testWebapp = new WebAppStack(app, 'testWebapp', {
+//   env: { region: process.env.AWS_REGION },
+//   assetsPath: '../test-webapp'
+// })
+
+// creating WebAppStack
+const certificate = new WebAppStack(app, 'certificate', {
+  env: { region: process.env.AWS_REGION },
+  assetsPath: '../certificate-of-completion',
+  // domainName: 'certificate.diegotrs.com'
+})
+
+
+// creating WebAppStack
 const apidoc = new WebAppStack(app, 'apidoc', {
   env: { region: process.env.AWS_REGION },
   assetsPath: '../apidoc'
@@ -27,6 +41,18 @@ const api = new RestApiStack(app, 'api', {
   }
 })
 
+api.get('/users', function(event, context) {
+  //asdasdasda
+  // get fron dynamo
+  return {
+    users: []
+  }
+})
+
+api.post('/users', function() {
+  // create user on ddbb
+})
+
 
 // creating BackendStack
 const backend = new BackendStack(app, 'backend', {
@@ -35,17 +61,34 @@ const backend = new BackendStack(app, 'backend', {
   }
 })
 
+// {
+//   "Version": "2012-10-17",
+//   "Statement": [
+//       {
+//           "Effect": "Allow",
+//           "Action": [
+//               "s3:*",
+//               "cloudwatch:*",
+//               "ec2:*"
+//           ],
+//           "Resource": "*"
+//       }
+//   ]
+// }
 
-// const boundary = (stackParam: IConstruct) => new cdk.aws_iam.ManagedPolicy(stackParam, 'permissions-boundary-ECS', {
+
+// [ ] 5.4.1  define Policy Boundary
+// const boundary = (stackParam: IConstruct) => new cdk.aws_iam.ManagedPolicy(stackParam, 'permissions-boundary', {
 //   statements: [
 //     new cdk.aws_iam.PolicyStatement({
 //       effect: cdk.aws_iam.Effect.DENY,
-//       actions: ['ECS:*'],
+//       actions: ['iam:GetUser'],
 //       resources: ['*'],
 //     }),
 //   ],
 // })
 
+// // [ ] 5.4.2 attach boundary to all constructs
 // cdk.aws_iam.PermissionsBoundary
 //   .of(backend)
 //   .apply(boundary(backend))

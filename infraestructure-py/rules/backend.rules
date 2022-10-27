@@ -1,0 +1,21 @@
+let dynamo = Resources.*[ Type == 'AWS::DynamoDB::Table']
+rule expire_items_from_table when %dynamo !empty {
+    %dynamo.Properties {
+        BillingMode == 'PAY_PER_REQUEST'
+        TimeToLiveSpecification {
+            AttributeName == '_autoapprove'
+            Enabled == true
+        }
+    }
+}
+
+
+let timestream = Resources.*[ Type == 'AWS::Timestream::Table' ]
+rule timestream_retention_props when %timestream !empty {
+    %timestream.Properties {
+        RetentionProperties {
+            MemoryStoreRetentionPeriodInHours in ['12', '24', '36']
+        }
+    }
+}
+

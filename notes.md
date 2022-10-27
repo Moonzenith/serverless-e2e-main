@@ -1,6 +1,10 @@
 <!-- https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/lambda-creating-project-in-visual-studio.html -->
 
 
+[sfdc opp](https://aws-crm.lightning.force.com/lightning/r/Opportunity/0064z000027y7WlAAI/view)
+
+[Typescrit for C# devs](https://www.youtube.com/watch?v=MRLUylSe6Dc)
+
 
 [ ] Aurora serverless
 [ ] [lambda function in POSH](https://github.com/awsdocs/aws-lambda-developer-guide/blob/main/sample-apps/blank-powershell/function/Handler.ps1)
@@ -37,3 +41,10 @@ https://dev.to/cjjenkinson/how-to-create-an-aurora-serverless-rds-instance-on-aw
 https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.CreateInstance.html#Aurora.CreateInstance.Creating
 
 https://docs.aws.amazon.com/cdk/v2/guide/troubleshooting.html
+
+
+
+[ ] generate Swagger file from apidoc
+[ ] slides on the services we are going to use
+
+

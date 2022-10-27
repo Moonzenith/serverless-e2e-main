@@ -39,16 +39,15 @@ describe("backend stack", () => {
         const batchSizeCapture = new Capture()
 
         template.hasResourceProperties('AWS::Lambda::EventSourceMapping',
-            Match.objectEquals({
-                StartingPosition: 'TRIM_HORIZON',
+            Match.objectLike({
                 FunctionName: {
                     Ref: functionNameCapture,
                 },
                 BatchSize: batchSizeCapture,
             }))
 
-            expect(functionNameCapture.asString()).not.toBeNull()
-            expect(batchSizeCapture.asNumber()).toBeGreaterThanOrEqual(2)
+        expect(functionNameCapture.asString()).not.toBeNull()
+        expect(batchSizeCapture.asNumber()).toBeGreaterThanOrEqual(2)
     })
 
     test('dynamo table key', () => { })

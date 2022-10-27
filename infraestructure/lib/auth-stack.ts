@@ -2,6 +2,7 @@ import {
     Stack,
     StackProps,
     aws_cognito as Cognito,
+    aws_lambda as Lambda,
     CfnOutput,
     Fn,
     Duration,
@@ -15,20 +16,19 @@ export class AuthStack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
         super(scope, id, props)
 
-        const userpool = new Cognito.UserPool(this, 'app-user-pool', {
-
+        const authenticateLambda = new Lambda.Function(this, 'authentication', {
+            runtime: Lambda.Runtime.NODEJS_14_X,
+            handler: 'index.handler',
+            code: Lambda.Code.fromAsset('../functions/authenticate'),
         })
 
 
-        const client = userpool.addClient('auth-hosted-ui', {
-            oAuth: {
-                flows: { implicitCodeGrant: true },
-                callbackUrls: [
-                    'https://mywebapp.com'
-                ],
-            },
+        const authorizerLambda = new Lambda.Function(this, 'authorization', {
+            runtime: Lambda.Runtime.NODEJS_14_X,
+            handler: 'index.handler',
+            code: Lambda.Code.fromAsset('../function/authorize'),
         })
-
+        
 
     }
 }

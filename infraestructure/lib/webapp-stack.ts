@@ -5,6 +5,8 @@ import {
     aws_s3_deployment as S3Deployment,
     aws_cloudfront as CloudFront,
     aws_cloudfront_origins as CloudFrontOrigins,
+    aws_route53 as Route53,
+    aws_certificatemanager as ACM,
     aws_iam as IAM,
     CfnOutput,
     RemovalPolicy,
@@ -17,11 +19,13 @@ export interface WebappProps extends StackProps {
 
     /** @param {string} assetsPath where the website is located */
     assetsPath: string
+    domainName?: string
 }
 
 export class WebAppStack extends Stack {
     constructor(scope: Construct, id: string, props?: WebappProps) {
         super(scope, id, props)
+
         // [ ] 1.1.1: create S3 Bucket as web hosting to store webapp [docs](https://docs.aws.amazon.com/cdk/api/v1/docs/aws-s3-readme.html)
         const webappBucket = new S3.Bucket(this, 'webapp-artifact', {
             accessControl: S3.BucketAccessControl.PRIVATE,
@@ -43,8 +47,21 @@ export class WebAppStack extends Stack {
 
         new CfnOutput(this, 'webappBucketName', {
             value: webappBucket.bucketName,
-            exportName: 'webappBucketName'
         })
+        // exportName: 'webappBucketName'
+
+
+        // [ ] 1.3.1: create Route 53 record set [docs](https://docs.aws.amazon.com/cdk/api/v1/docs/aws-route53-readme.html)
+        // const domainName = props?.domainName || `${Date.now()}.diegotrs.com`
+
+        // const hostedZone = new Route53.HostedZone(this, 'hoztedZone', { zoneName: domainName })
+
+        // const cert = new ACM.DnsValidatedCertificate(this, 'webapp-cert', { 
+        //     domainName: domainName, 
+        //     hostedZone, 
+
+        // })
+        // const record
 
 
         // [ ] 1.2.1: create CloudFront distribution [docs](https://docs.aws.amazon.com/cdk/api/v1/docs/aws-cloudfront-readme.html)
@@ -58,31 +75,23 @@ export class WebAppStack extends Stack {
 
             defaultBehavior: {
                 origin: new CloudFrontOrigins.S3Origin(webappBucket, { originAccessIdentity })
-            }
+            },
+
+            // certificate: cert,
+            // domainNames: [domainName]
         })
 
         new CfnOutput(this, 'webappDnsUrl', {
             value: cdnDistribution.distributionDomainName,
-            exportName: 'webappDnsUrl'
         })
+        // exportName: 'webappDnsUrl'
 
         new CfnOutput(this, 'distributionId', {
             value: cdnDistribution.distributionId,
-            exportName: 'distributionId'
         })
+        // exportName: 'distributionId'
 
 
-        // [o] 1.3.1: create Route 53 record set [docs](https://docs.aws.amazon.com/cdk/api/v1/docs/aws-route53-readme.html)
-
-        // [x] TODO: create DynamoDB orders table
-        // const ordersTable = new DynamoDB.Table(this, 'orders', {
-        //   partitionKey: { name: 'customer', type: DynamoDB.AttributeType.STRING },
-        //   sortKey: { name: 'id', type: DynamoDB.AttributeType.STRING },
-        //   billingMode: DynamoDB.BillingMode.PAY_PER_REQUEST,
-        // })
-
-        // const lambdaRole = IAM.Role.fromRoleName(this, 'lambdaRole', apiConfig.lambda.role)
-        // ordersTable.grantReadWriteData(lambdaRole)
 
     }
 }

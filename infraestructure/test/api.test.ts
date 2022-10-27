@@ -14,10 +14,10 @@ describe("api stack", () => {
     test('all required resources are present', () => {
         const template = getTemplate()
         
-        template.resourceCountIs('AWS::Lambda::Function', 3)
+        template.resourceCountIs('AWS::Lambda::Function', 5)
         template.resourceCountIs('AWS::ApiGateway::RestApi', 1)
-        template.resourceCountIs('AWS::ApiGateway::Resource', 3)
-        template.resourceCountIs('AWS::ApiGateway::Method', 7)
+        template.resourceCountIs('AWS::ApiGateway::Resource', 4)
+        template.resourceCountIs('AWS::ApiGateway::Method', 9)
         
 
     })

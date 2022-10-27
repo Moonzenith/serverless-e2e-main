@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate e2e</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: space-around;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <img src="./CERTIFICADO1.png" alt=""> -->
+
+    <section class="certificate-container">
+
+        <!-- "CERTIFICATE" ESTA PARTIDO EN DOS LADOS "LEFT" "RIGTH" -->
+        <div class="certificate">
+
+
+            <div class="left">
+
+                <h1>PROOF OF COMPLETION</h1>
+
+                <!-- LA CLASE "BOLD" SOLO SIRVE PARA RESALTAR REXTO -->
+                <div>
+
+                    <!-- LE COLOQUE CAR-DONUT POR CARRO=CAR Y DONA=DONNUT, TODO ESTO DA CAR-DONA xD -->
+
+                    <h2 id="student-name">Your name here</h2>
+                    <p>Has succesfully completed <br> <span class="bold">AWS</span> serverless immersion day <br>Led by
+                        <span class="bold">Diego Torres</span>
+                    </p>
+
+                </div>
+
+
+                <div class="logos">
+                    <h3>AWS / E2E<h3>
+                            <small>August 17 and 19 2022</small>
+                </div>
+
+            </div>
+
+
+            <div class="right">
+                <!-- EL IMG CONTIENE EL LOGO DE E2E -->
+                <img src="./assets/logo.png" alt="">
+            </div>
+
+        </div>
+
+
+
+    </section>
+
+    <script>
+        function run() {
+            const name = prompt('please write your name as you want it on the certificate')
+            document.querySelector('#student-name').innerHTML = name
+        }
+        run()
+    </script>
+
+    <!-- <script type="text/javascript">
+        var doc = new jsPDF();
+        var specialElementHandlers = {
+            '#editor': function (element, renderer) {
+                return true;
+            }
+        };
+
+
+        $('#generatePDF').click(function () {
+            doc.fromHTML($('#htmlContent').html(), 15, 15, {
+                'width': 700,
+                'elementHandlers': specialElementHandlers
+            });
+            doc.save('sample_file.pdf');
+        });
+    </script> -->
+
+</body>
+
+</html>

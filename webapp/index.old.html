@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>some app</title>
+
+    <link rel="stylesheet" href="./css/main.css">
+
+</head>
+
+<body>
+
+    <header>
+        <nav class="nav-menu">
+            <div class="link-container">
+                <button class="test-hint-btn"><a href="#">HINT</a></button>
+                <button class="test-help-btn"><a href="#">HELP</a></button>
+            </div>
+
+            <img src="./assets/SVG/AWSOME.svg" alt="">
+
+            <div class="link-container">
+                <button class="test-cart-btn"><a href="#">CART</a></button>
+                <button class="test-user-btn"><a href="#">USER</a></button>
+            </div>
+
+        </nav>
+    </header>
+
+    <hr>
+
+    <article class="product-section">
+
+        <section class="catalog-product">
+
+            <h1>PRODUCTS</h1>
+
+
+            <ul>
+                <li class="card-product">
+
+
+                    <img src="./assets/cup-coffee.png" alt="">
+
+
+                    <div class="title">
+
+                        <h4>Coffee</h4>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+
+                    </div>
+
+
+                    <div class="add-more-btn-container">
+
+                        <div class="add-more-btn">
+
+                            <button class="minus-btn">-</button>
+                            <p>1</p>
+                            <button class="plus-btn">+</button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="add-product-btn-container">
+
+                        <button id="add-coffe-btn" class="add-product-btn test-coffe-btn" data-name="coffe"
+                            data-type="beberage">Add</button>
+
+                    </div>
+
+
+                </li>
+
+                <li class="card-product">
+
+                    <img src="./assets/capuccino.png" alt="">
+
+                    <div class="title">
+
+                        <h4>Capuccino</h4>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+
+                    </div>
+
+
+                    <div class="add-more-btn-container">
+
+                        <div class="add-more-btn">
+
+                            <button class="minus-btn">-</button>
+                            <p>1</p>
+                            <button class="plus-btn">+</button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="add-product-btn-container">
+
+                        <button id="add-capuccino-btn" class="add-product-btn test-capu-btn" data-name="capuccino"
+                            data-type="beberage">Add</button>
+
+                    </div>
+
+
+
+                </li>
+
+                <li class="card-product">
+
+                    <img src="./assets/hot-chocolate.png" alt="">
+
+                    <div class="title">
+
+                        <h4>Hot chocolate</h4>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+
+                    </div>
+
+
+                    <div class="add-more-btn-container">
+
+                        <div class="add-more-btn">
+
+                            <button class="minus-btn">-</button>
+                            <p>1</p>
+                            <button class="plus-btn">+</button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="add-product-btn-container">
+
+                        <button id="add-chocolate-btn test-choco-btn" class="add-product-btn" data-name="hot chocolate"
+                            data-type="beberage">Add</button>
+
+                    </div>
+
+
+
+                </li>
+
+                <li class="card-product">
+
+                    <img src="./assets/croissant.png" alt="">
+
+                    <div class="title">
+
+                        <h4>Croissant</h4>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+
+                    </div>
+
+
+                    <div class="add-more-btn-container">
+
+                        <div class="add-more-btn">
+
+                            <button class="minus-btn">-</button>
+                            <p>1</p>
+                            <button class="plus-btn">+</button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="add-product-btn-container">
+
+                        <button id="add-xxx-btn" class="add-product-btn test-croi-btn" data-name="croisant"
+                            data-type="meal">Add</button>
+
+                    </div>
+
+
+
+                </li>
+
+                <li class="card-product">
+
+                    <img src="./assets/avocado-toast.png" alt="">
+
+                    <div class="title">
+
+                        <h4>Avocado toast</h4>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+
+                    </div>
+
+
+                    <div class="add-more-btn-container">
+
+                        <div class="add-more-btn">
+
+                            <button class="minus-btn">-</button>
+                            <p>1</p>
+                            <button class="plus-btn">+</button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="add-product-btn-container">
+
+                        <button id="add-avocado-btn" class="add-product-btn test-toast-btn" data-name="avocado toast"
+                            data-type="meal">Add</button>
+
+                    </div>
+
+
+
+                </li>
+
+
+            </ul>
+
+            <button id="place-order-btn" class="place-order-btn test-place-order-btn">Place order</button>
+
+        </section>
+
+
+        <section class="shopping-cart-container">
+            <h1>ORDER</h1>
+            <ol class="shopping-cart">
+            </ol>
+        </section>
+
+    </article>
+    <hr>
+
+
+    <section id="order-list" class="order-list-container">
+        <h1>SHOP RECORD</h1>
+
+        <ol class="order-history">
+
+            <li data-id="1657896155388" data-customer="diegotrs">
+                <b>Customer:</b> <span>diegotrs</span>
+                <br>
+                <b>Items:</b>
+
+                <ol>
+                    <li data-name="croisant" data-type="meal" data-qty="1">croissant x 1</li>
+                    <li data-name="hot chocolate" data-type="beberage" data-qty="2">hot chocolate x 2</li>
+                </ol>
+            </li>
+            <li data-id="1657896160191" data-customer="diegotrs">
+                <b>Customer:</b> <span>diegotrs</span>
+                <br>
+                <b>Items:</b>
+
+                <ol>
+                    <li data-name="avocado toast" data-type="meal" data-qty="6">avocado toast x 6</li>
+                    <li data-name="hot chocolate" data-type="beberage" data-qty="1">hot chocolate x 1</li>
+                </ol>
+            </li>
+
+        </ol>
+    </section>
+
+   
+    <script src="./src/index.js"></script>
+    <!-- <script src="./src/main.js"></script> -->
+
+</body>
+
+</html>

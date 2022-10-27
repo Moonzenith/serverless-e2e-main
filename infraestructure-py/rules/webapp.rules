@@ -1,0 +1,7 @@
+let buckets = Resources.*[ Type == 'AWS::S3::Bucket']
+rule private_bucket when %buckets !empty {
+    %buckets.Properties {
+        AccessControl == 'Private'
+    }
+    %buckets.DeletionPolicy == 'Retain'
+}

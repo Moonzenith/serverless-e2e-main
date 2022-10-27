@@ -1,4 +1,6 @@
 
+cdk bootstrap
+
 ## BACKEND
 
 # running cdk synth on backend stack
@@ -42,3 +44,18 @@ cfn-guard validate -d .\cdk.out\webappStack.template.json -r .\rules\webapp.rule
 # deploy webapp stack and save webapp.json on root folder
 Write-Output "deploy webapp stack and save webapp.json on root folder"
 cdk deploy webapp -O ../webapp.json
+
+
+## APIDOC
+
+# running cdk synth on apidoc stack
+Write-Output "running cdk synth on apidoc stack"
+cdk synth apidoc
+
+# running cfn-guard on apidoc stack
+Write-Output "running cfn-guard on apidoc stack"
+cfn-guard validate -d .\cdk.out\apidoc.template.json -r .\rules\webapp.rules
+
+# deploy apidoc stack and save apidoc.json on root folder
+Write-Output "deploy apidoc stack and save apidoc.json on root folder"
+cdk deploy apidoc -O ../apidoc.json

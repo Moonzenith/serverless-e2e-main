@@ -39,6 +39,13 @@ const orders = [{
     staff: 1
 }]
 
+class OrderItem {
+    constructor(params) {
+        this.name = params.name || ''
+        this.type = params.type || ''
+        this.qty = Number(params.qty) || 0
+    }
+}
 class Order {
     /** @param {OrderJSON} json */
     constructor(json) {

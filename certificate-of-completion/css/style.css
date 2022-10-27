@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Gruppo&family=Montserrat:wght@300;600&display=swap');
+@import url(./normalize.css);
+
+
+:root{
+    --main-bg-color: brown;
+    --hard-main: #597506;
+    --light-main: #858f67 ;
+    --light-black:#646165;
+    --base-black:#232124;
+}
+html{
+    font-family: 'Montserrat', sans-serif;
+    color: var(--light-main);
+}
+h1,h2{
+    font-family: 'Gruppo', serif;
+    letter-spacing: 3px;
+    font-weight: 600;
+    font-size: 34px;
+}
+h1{
+    margin: 0;
+    color: var(--light-black);
+
+    
+}
+h2{
+    color:var(--hard-main);
+}
+h3{
+    font-family: 'Gruppo', serif;
+    margin: 0px;
+    color: var(--base-black) ;
+}
+p{
+    font-weight: 300;
+    
+    line-height: 200%;
+    font-size: 18px;
+  
+    margin: 0;
+    color:var(--light-black);
+}
+.bold{
+    font-weight: 600;
+    color: var(--hard-main);
+}
+
+.certificate-container{
+    
+    width: 842px;
+    height: 595px;
+   
+    font-size: 1rem;
+    background-image: url(../assets/CERTIFICATE-BACKGROUND.png);
+    background-size: cover;
+    background-position: 10% 50%;
+    background-repeat: no-repeat;
+
+}
+
+ 
+    .certificate{
+        display: grid;
+        grid-template-columns: 60% 40%;
+        grid-template-rows:595px;
+       
+/* 
+        background-image: linear-gradient(to top, #d4d4d4, #f2f2f2);   */
+    }
+        .left{
+            margin: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .right{
+            display: grid;
+            justify-content: center;
+            align-items: center;
+            margin: 28px;
+
+        }
+            .right img{
+                
+                width: 280px;
+                filter: drop-shadow(0px 0px 20px  #000000);
+            }
